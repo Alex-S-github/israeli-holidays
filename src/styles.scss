@@ -1,1 +1,65 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "SFProDisplay-Regular", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+:root {
+  --primary-color: #0038b8;
+  --secondary-color: #0038b8;
+  --accent-color: #025cb0;
+
+  --border-radius: 6px;
+  --border-color: #cfdce1;
+
+  --btn-disabled-background: #ebeeef;
+
+  --text-primary-color: #3f4b64;
+  --text-secondary-color: #7f8c9f;
+
+  --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
