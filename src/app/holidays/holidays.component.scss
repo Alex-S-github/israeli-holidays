@@ -12,6 +12,14 @@
 
 table {
   width: 100%;
+  td.mat-column-date {
+    min-width: 80px;
+  }
+}
+.name-column {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 @media (max-width: 680px) {

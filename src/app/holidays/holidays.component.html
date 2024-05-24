@@ -1,6 +1,6 @@
 <section class="header" [formGroup]="form">
   <mat-form-field class="full-width">
-    <mat-label>Showing</mat-label>
+    <mat-label>Days off</mat-label>
     <input
       matInput
       placeholder="Showing"
@@ -17,33 +17,51 @@
     </mat-select>
   </mat-form-field>
   <mat-checkbox formControlName="isWeekdays" color="primary"
-    >show only weekdays</mat-checkbox
+    >Weekdays</mat-checkbox
   >
 </section>
 
 <section class="table-container mat-elevation-z8" tabindex="0">
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <th mat-header-cell *matHeaderCellDef>
+        <div class="name-column">
+          Name
+          <button
+            mat-icon-button
+            color="primary"
+            routerLink="/calendar"
+            routerLinkActive="active"
+          >
+            <mat-icon fontIcon="calendar_month"></mat-icon>
+          </button>
+        </div>
+      </th>
       <td mat-cell *matCellDef="let element" (click)="openDetail(element)">
         {{ element.name }}
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef>Date</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.date | date : "MMM dd" }}
-      </td>
-    </ng-container>
     <ng-container matColumnDef="day">
       <th mat-header-cell *matHeaderCellDef>Day</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.day | date : "EEEE" }}
+        <div style="display: flex; justify-content: space-between">
+          <div>
+            {{ element.date | date : "EEEE" }}
+          </div>
+          <div>
+            {{ element.date | date : "MMM dd" }}
+          </div>
+        </div>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [style]="isWeekendStyle(row)"
+    ></tr>
   </table>
 </section>

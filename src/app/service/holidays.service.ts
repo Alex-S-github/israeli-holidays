@@ -6,18 +6,28 @@ import { IHolidays } from '../interfaces/holidays.interface';
   providedIn: 'root',
 })
 export class HolidaysService {
-  public getHolidays(year: number): IHolidays[] {
-    return this._getHolidays(year).map((holiday: any) => {
-      const hd = holiday.getDate();
-      const date = hd.greg();
-      return {
-        name: holiday?.linkedEvent?.desc
-          ? holiday?.linkedEvent?.desc
-          : holiday.desc,
-        date: date,
-        day: date,
-      };
-    });
+  public getHolidays(
+    year: number,
+    isWeekdays: boolean | undefined | null = true
+  ): IHolidays[] {
+    return this._getHolidays(year)
+      .map((holiday: any) => {
+        const hd = holiday.getDate();
+        const date = hd.greg();
+        return {
+          name: holiday?.linkedEvent?.desc || holiday.desc,
+          date: date,
+        };
+      })
+      .filter((holiday) => {
+        if (isWeekdays) {
+          const dayOfWeek = new Date(holiday.date).getDay();
+          // Exclude Friday (5) and Saturday (6)
+          return dayOfWeek !== 5 && dayOfWeek !== 6;
+        }
+        // Return all holidays, when filtering is not required
+        return true;
+      });
   }
 
   private _getHolidays(year: number): HebrewCalendar[] {
