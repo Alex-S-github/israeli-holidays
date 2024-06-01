@@ -42,7 +42,7 @@ import { IHolidays } from '../interfaces/holidays.interface';
 })
 export class HolidaysComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder) {}
-  private subscription$!: Subscription;
+  subscription$!: Subscription;
 
   holidaysService: HolidaysService = inject(HolidaysService);
   currentYear = new Date().getFullYear();
@@ -50,7 +50,7 @@ export class HolidaysComponent implements OnInit {
 
   form = this._formBuilder.group({
     year: this.currentYear,
-    isWeekdays: true,
+    onlyWeekdays: true,
   });
 
   displayedColumns = ['day', 'name'];
@@ -65,7 +65,7 @@ export class HolidaysComponent implements OnInit {
     this.setDataSourse(
       this.holidaysService.getHolidays(
         this.currentYear,
-        this.form.controls.isWeekdays.value
+        this.form.controls.onlyWeekdays.value
       )
     );
   }
@@ -82,7 +82,7 @@ export class HolidaysComponent implements OnInit {
         if (!form.year) return;
         let holidays: IHolidays[] = this.holidaysService.getHolidays(
           form.year,
-          form.isWeekdays
+          form.onlyWeekdays
         );
         this.setDataSourse(holidays);
       });
@@ -90,18 +90,6 @@ export class HolidaysComponent implements OnInit {
 
   setDataSourse(data: IHolidays[]): void {
     this.dataSource = new MatTableDataSource<IHolidays>(data);
-  }
-
-  openDetail(row: IHolidays): void {
-    console.log('HolidaysComponent ~ openDetail ~ row:', row);
-  }
-
-  isWeekendStyle(data: IHolidays): string | null {
-    const dayOfWeek = new Date(data.date).getDay();
-    if (dayOfWeek == 5 || dayOfWeek == 6) {
-      return 'opacity:0.4';
-    }
-    return null;
   }
 
   ngOnDestroy(): void {

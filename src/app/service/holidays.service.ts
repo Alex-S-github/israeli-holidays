@@ -17,13 +17,14 @@ export class HolidaysService {
         return {
           name: holiday?.linkedEvent?.desc || holiday.desc,
           date: date,
+          isWeekdays:
+            new Date(date).getDay() !== 5 && new Date(date).getDay() !== 6,
         };
       })
       .filter((holiday) => {
         if (isWeekdays) {
-          const dayOfWeek = new Date(holiday.date).getDay();
-          // Exclude Friday (5) and Saturday (6)
-          return dayOfWeek !== 5 && dayOfWeek !== 6;
+          // Returns objects whose isWeekdays is true
+          return holiday.isWeekdays == true;
         }
         // Return all holidays, when filtering is not required
         return true;
