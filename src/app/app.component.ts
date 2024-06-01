@@ -13,4 +13,5 @@ import { HolidaysComponent } from './holidays/holidays.component';
 export class AppComponent {
   title = 'israeli-holidays';
   // ng build --output-path docs --base-href /israeli-holidays/
+  // after build, move all files from 'browser' to 'docs' folder
 }
