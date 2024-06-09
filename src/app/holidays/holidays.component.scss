@@ -22,14 +22,84 @@ table {
   justify-content: space-between;
 }
 
+.year-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px;
+}
+
+.calendar-card {
+  width: 48%;
+  max-width: 400px;
+
+  .mat-calendar-content {
+    padding-top: 10px;
+  }
+  mat-calendar-header {
+    display: none;
+  }
+}
+
+button.holliday,
+button.holliday-on-weekend {
+  background: #3f51b5;
+  border-radius: 100%;
+  .mat-calendar-body-cell-content {
+    color: white;
+  }
+}
+button.holliday-on-weekend {
+  opacity: 0.3;
+}
+
+.weekend {
+  .mat-calendar-body-cell-content {
+    color: green;
+  }
+  opacity: 0.6;
+}
+.view-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.view-btn-container {
+  display: flex;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+.btn {
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.8;
+}
+
+.btn-selected {
+  background-color: var(--mdc-filled-text-field-container-color);
+  opacity: 1;
+}
+
 @media (max-width: 680px) {
   .header {
     flex-wrap: wrap;
   }
 
-  .full-width:first-child {
-    margin-right: 10px;
-  }
   .full-width {
     width: calc(50% - 10px);
   }
@@ -46,5 +116,34 @@ table {
   }
   .table-container {
     margin: 0px;
+  }
+}
+
+@media (max-width: 320px) {
+  .header {
+    margin: 10px;
+  }
+  .year-container {
+    margin: 10px;
+    justify-content: center;
+
+    .calendar-card {
+      .mat-calendar-content {
+        padding-top: 10px;
+      }
+      .mat-calendar-body-cell-content {
+        font-size: 10px;
+      }
+      .mat-calendar-body-label {
+        font-size: 11px;
+      }
+    }
+  }
+
+  .month-container {
+    .calendar-card {
+      width: calc(100% - 20px);
+      margin: 10px;
+    }
   }
 }
