@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HebrewCalendar, Location, HolidayEvent } from '@hebcal/core';
 import { IHolidays } from '../interfaces/holidays.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HolidaysService {
+  protected view$: BehaviorSubject<string> = new BehaviorSubject('Table');
+
   public getHolidays(
     year: number,
     isWeekdays: boolean | undefined | null = true
@@ -54,7 +57,7 @@ export class HolidaysService {
     );
   }
 
-  getYearsOptions(currentYear: number): number[] {
+  public getYearsOptions(currentYear: number): number[] {
     const startYear: number = currentYear - 20;
     const endYear: number = currentYear + 40;
 
@@ -62,5 +65,17 @@ export class HolidaysService {
       { length: endYear - startYear + 1 },
       (_, index) => startYear + index
     );
+  }
+
+  public getView(): Observable<string> {
+    return this.view$;
+  }
+
+  public getViewValue(): string {
+    return this.view$.value;
+  }
+
+  public setView(view: string): void {
+    this.view$.next(view);
   }
 }

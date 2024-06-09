@@ -16,11 +16,30 @@
       }
     </mat-select>
   </mat-form-field>
-  <mat-checkbox formControlName="onlyWeekdays" color="primary"
-    >Weekdays</mat-checkbox
-  >
+  <div class="view-container">
+    <mat-checkbox formControlName="onlyWeekdays" color="primary"
+      >Weekdays</mat-checkbox
+    >
+    <div *ngIf="view$ | async as view" class="view-btn-container">
+      <button
+        class="btn"
+        (click)="toggleView('Table')"
+        [ngClass]="view === 'Table' ? 'btn-selected' : null"
+      >
+        <mat-icon fontIcon="table_chart" color="primary"></mat-icon> Table
+      </button>
+      <button
+        class="btn"
+        (click)="toggleView('Year')"
+        [ngClass]="view === 'Year' ? 'btn-selected' : null"
+      >
+        <mat-icon fontIcon="calendar_month" color="primary"></mat-icon> Year
+      </button>
+    </div>
+  </div>
 </section>
 
+@switch (this.view$ | async ) { @case ("Table") {
 <section class="table-container mat-elevation-z8" tabindex="0">
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="name">
@@ -57,3 +76,16 @@
     ></tr>
   </table>
 </section>
+} @case ("Year") {
+<section class="year-container">
+  @for (holiday of this.groupedHolidays; track holiday) {
+  <mat-card class="calendar-card">
+    <mat-calendar
+      [startAt]="holiday.dates[0].date"
+      [dateClass]="monthCellClass"
+    ></mat-calendar>
+  </mat-card>
+  }
+</section>
+
+} }

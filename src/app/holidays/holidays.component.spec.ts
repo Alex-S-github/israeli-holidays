@@ -26,6 +26,18 @@ describe('HolidaysComponent', () => {
   let fixture: ComponentFixture<HolidaysComponent>;
   let holidaysService: HolidaysService;
 
+  let mockHolidays = [
+    'Tue Apr 23 2024',
+    'Mon Apr 29 2024',
+    'Tue May 14 2024',
+    'Wed Jun 12 2024',
+    'Thu Oct 03 2024',
+    'Fri Oct 04 2024',
+    'Sat Oct 12 2024',
+    'Thu Oct 17 2024',
+    'Thu Oct 24 2024',
+  ];
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -117,21 +129,21 @@ describe('HolidaysComponent', () => {
   });
 
   it('should initialize the form and subscribe to value changes', fakeAsync(() => {
-    const setDataSourseSpy = spyOn(component, 'setDataSourse');
+    const setDataSourseSpy = spyOn(component, 'setDataView');
     component.form.patchValue({ year: 2023, onlyWeekdays: false });
     tick(500);
     expect(setDataSourseSpy).toHaveBeenCalledTimes(1);
   }));
 
   it('should not call setDataSourse if year is not provided', fakeAsync(() => {
-    const setDataSourseSpy = spyOn(component, 'setDataSourse');
+    const setDataSourseSpy = spyOn(component, 'setDataView');
     component.form.patchValue({ year: null, onlyWeekdays: false });
     tick(500);
     expect(setDataSourseSpy).not.toHaveBeenCalled();
   }));
 
   it('should debounce and distinct value changes', fakeAsync(() => {
-    const setDataSourseSpy = spyOn(component, 'setDataSourse');
+    const setDataSourseSpy = spyOn(component, 'setDataView');
     component.form.patchValue({ year: 2023, onlyWeekdays: false });
     tick(250);
     component.form.patchValue({ year: 2023, onlyWeekdays: false });
@@ -140,7 +152,7 @@ describe('HolidaysComponent', () => {
   }));
 
   it('should not call setDataSourse if form values have not changed', fakeAsync(() => {
-    const setDataSourseSpy = spyOn(component, 'setDataSourse');
+    const setDataSourseSpy = spyOn(component, 'setDataView');
     component.form.patchValue({ year: 2023, onlyWeekdays: false });
     tick(500);
     component.form.patchValue({ year: 2023, onlyWeekdays: false });
@@ -149,4 +161,65 @@ describe('HolidaysComponent', () => {
     tick(500);
     expect(setDataSourseSpy).toHaveBeenCalledTimes(1);
   }));
+
+  it('should have initial view as "Table"', (done) => {
+    component.view$.subscribe((view) => {
+      expect(view).toBe('Table');
+      done();
+    });
+  });
+
+  it('should toggle view to "Year" and toggle sidenav', () => {
+    component.toggleView('Year');
+    const viewValue = holidaysService.getViewValue();
+    expect(viewValue).toBe('Year');
+    holidaysService.getView().subscribe((value) => {
+      expect(value).toBe('Year');
+    });
+  });
+
+  it('should toggle view to "Table" and toggle sidenav', () => {
+    component.toggleView('Table');
+    const viewValue = holidaysService.getViewValue();
+    expect(viewValue).toBe('Table');
+    holidaysService.getView().subscribe((value) => {
+      expect(value).toBe('Table');
+    });
+  });
+  it('should return an empty string if view is not "month"', () => {
+    const cellDate = new Date(2023, 5, 13);
+    const view = 'year';
+    const result = component.monthCellClass(cellDate, view);
+    expect(result).toBe('');
+  });
+  //
+  it('should return "holiday" for holidays that are not weekends', () => {
+    component.holidays = mockHolidays;
+    const cellDate = new Date('Tue Apr 23 2024');
+    const view = 'month';
+    const result = component.monthCellClass(cellDate, view);
+    expect(result).toBe('holliday');
+  });
+
+  it('should return "holiday-on-weekend" for holidays that are weekends', () => {
+    component.holidays = mockHolidays;
+    const cellDate = new Date('Fri Oct 04 2024');
+    const view = 'month';
+    const result = component.monthCellClass(cellDate, view);
+    expect(result).toBe('holliday-on-weekend');
+  });
+
+  it('should return "weekend" for weekends that are not holidays', () => {
+    const cellDate = new Date('Sat Oct 05 2024');
+    const view = 'month';
+    const result = component.monthCellClass(cellDate, view);
+    expect(result).toBe('weekend');
+  });
+
+  it('should return an empty string for non-holiday weekdays', () => {
+    const cellDate = new Date(2023, 5, 13);
+    const view = 'month';
+    const result = component.monthCellClass(cellDate, view);
+    expect(result).toBe('');
+  });
 });

@@ -54,4 +54,29 @@ describe('HolidaysService', () => {
       expect(events.length).toBe(9);
     });
   });
+
+  it('should return the initial view as "Table"', (done: DoneFn) => {
+    service.getView().subscribe((view) => {
+      expect(view).toBe('Table');
+      done();
+    });
+  });
+
+  it('should return the current view value', () => {
+    service.setView('Year');
+    expect(service.getViewValue()).toBe('Year');
+  });
+
+  it('should set the view to "Year" and return the updated value', (done: DoneFn) => {
+    service.setView('Year');
+    service.getView().subscribe((view) => {
+      expect(view).toBe('Year');
+      done();
+    });
+  });
+
+  it('should update the current view value after setting a new view', () => {
+    service.setView('Year');
+    expect(service.getViewValue()).toBe('Year');
+  });
 });
