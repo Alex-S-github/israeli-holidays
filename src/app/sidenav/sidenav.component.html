@@ -1,0 +1,33 @@
+<mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
+  <mat-sidenav #sidenav [mode]="'push'">
+    <ng-container *ngIf="currentView$ | async as View">
+      <div class="settings-container">
+        <button
+          class="btn"
+          (click)="toggleView(sidenav, 'Table')"
+          [ngClass]="View === 'Table' ? 'btn-selected' : null"
+        >
+          <mat-icon fontIcon="table_chart" [color]="color"></mat-icon> Table
+        </button>
+        <button
+          class="btn"
+          (click)="toggleView(sidenav, 'Year')"
+          [ngClass]="View === 'Year' ? 'btn-selected' : null"
+        >
+          <mat-icon fontIcon="calendar_month" [color]="color"></mat-icon> Year
+        </button>
+      </div>
+    </ng-container>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content-container">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon fontIcon="menu" color="primary"></mat-icon>
+      </button>
+
+      <img src="assets/holidays-blue.svg" />
+    </div>
+
+    <ng-content select=".holidays"></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
