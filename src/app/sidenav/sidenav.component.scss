@@ -55,6 +55,19 @@ mat-sidenav {
   }
 }
 
+@media (max-width: 425px) {
+  :host {
+    img {
+      width: 100%;
+      margin-top: 4px;
+      height: 50px;
+    }
+  }
+  .content-container {
+    margin: 10px 20px;
+  }
+}
+
 @media (max-width: 375px) {
   mat-sidenav {
     width: 70%;

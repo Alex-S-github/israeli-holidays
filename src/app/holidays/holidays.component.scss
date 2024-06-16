@@ -12,14 +12,12 @@
 
 table {
   width: 100%;
-  td.mat-column-date {
-    min-width: 80px;
+
+  .day-column {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-}
-.name-column {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .year-container {
@@ -43,7 +41,8 @@ table {
 }
 
 button.holliday,
-button.holliday-on-weekend {
+button.holliday-on-weekend,
+button.half-holliday {
   background: #3f51b5;
   border-radius: 100%;
   .mat-calendar-body-cell-content {
@@ -52,6 +51,10 @@ button.holliday-on-weekend {
 }
 button.holliday-on-weekend {
   opacity: 0.3;
+}
+
+button.half-holliday {
+  opacity: 0.8;
 }
 
 .weekend {
@@ -106,9 +109,6 @@ button {
 }
 
 @media (max-width: 480px) {
-  .header {
-    gap: 10px;
-  }
   .full-width {
     width: calc(50% - 5px);
   }
@@ -121,6 +121,13 @@ button {
   .header {
     margin: 10px;
   }
+  table {
+    .mdc-data-table__cell,
+    .mdc-data-table__header-cell {
+      padding: 0 8px 0 8px;
+    }
+  }
+
   .year-container {
     margin: 10px;
     justify-content: center;
