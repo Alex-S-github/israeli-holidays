@@ -5,6 +5,20 @@ import { HolidaysService } from './holidays.service';
 describe('HolidaysService', () => {
   let service: HolidaysService;
 
+  const mockData = [
+    { year: 2018, weekdaysOnly: 13, allDays: 17 },
+    { year: 2019, weekdaysOnly: 13, allDays: 17 },
+    { year: 2020, weekdaysOnly: 10, allDays: 17 },
+    { year: 2021, weekdaysOnly: 14, allDays: 17 },
+    { year: 2022, weekdaysOnly: 13, allDays: 17 },
+    { year: 2023, weekdaysOnly: 10, allDays: 17 },
+    { year: 2024, weekdaysOnly: 14, allDays: 17 },
+    { year: 2025, weekdaysOnly: 14, allDays: 17 },
+    { year: 2026, weekdaysOnly: 10, allDays: 17 },
+    { year: 2027, weekdaysOnly: 10, allDays: 17 },
+    { year: 2028, weekdaysOnly: 14, allDays: 17 },
+  ];
+
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(HolidaysService);
@@ -19,7 +33,7 @@ describe('HolidaysService', () => {
       const year = 2023;
       const holidays = service.getHolidays(year, true);
       expect(holidays).toBeTruthy();
-      expect(holidays.length).toEqual(5);
+      expect(holidays.length).toEqual(10);
     });
 
     it('should filter holidays correctly based on isWeekdays parameter', () => {
@@ -27,9 +41,18 @@ describe('HolidaysService', () => {
       const weekdaysOnly = service.getHolidays(year, true);
       const allDays = service.getHolidays(year, false);
 
-      expect(weekdaysOnly.length).toBe(5);
-      expect(allDays.length).toBe(9);
+      expect(weekdaysOnly.length).toBe(10);
+      expect(allDays.length).toBe(17);
       expect(weekdaysOnly.length).toBeLessThanOrEqual(allDays.length);
+    });
+
+    mockData.forEach(({ year, weekdaysOnly, allDays }) => {
+      it(`should return ${weekdaysOnly} weekdays for the year ${year}`, () => {
+        const weekdaysOnlyResult = service.getHolidays(year, true);
+        expect(weekdaysOnlyResult.length).toBe(weekdaysOnly);
+        const allDaysResult = service.getHolidays(year, false);
+        expect(allDaysResult.length).toBe(allDays);
+      });
     });
   });
 
@@ -51,7 +74,7 @@ describe('HolidaysService', () => {
       const events = service['_getHolidays'](year);
 
       expect(events).toBeTruthy();
-      expect(events.length).toBe(9);
+      expect(events.length).toBe(17);
     });
   });
 
