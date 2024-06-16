@@ -12,21 +12,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule, RouterOutlet } from '@angular/router';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatTabsModule } from '@angular/material/tabs';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  FormBuilder,
-  FormControl,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 
 import { HolidaysService } from '../service/holidays.service';
-import { IHolidays } from '../interfaces/holidays.interface';
+import { IGroupedHolidays, IHolidays } from '../interfaces/holidays.interface';
 
 import {
   MatCalendarCellClassFunction,
@@ -42,22 +33,15 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     CommonModule,
     MatTableModule,
     MatFormFieldModule,
-    MatInputModule,
-    MatFormFieldModule,
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatDividerModule,
-    MatTooltipModule,
     MatIconModule,
-    RouterOutlet,
-    RouterModule,
     MatCardModule,
     MatDatepickerModule,
-    MatTabsModule,
   ],
   templateUrl: './holidays.component.html',
   styleUrl: './holidays.component.scss',
@@ -82,7 +66,7 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<IHolidays>([]);
 
   holidays: string[] = [];
-  groupedHolidays: any[] = [];
+  groupedHolidays: IGroupedHolidays[] = [];
 
   ngOnInit(): void {
     this.initHolidays();
@@ -131,24 +115,36 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   }
 
   monthCellClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
-    if (view != 'month') {
+    if (view !== 'month') {
       return '';
     }
-    if (this.holidays.includes(cellDate.toDateString())) {
-      if (cellDate.getDay() !== 5 && cellDate.getDay() !== 6) {
-        return 'holliday';
-      } else {
-        return 'holliday-on-weekend';
+
+    const dateStr = cellDate.toDateString();
+    const day = cellDate.getDay();
+    const holiday: IHolidays | undefined = [...this.dataSource.data].find(
+      (h: IHolidays) => h.date.toDateString() === dateStr
+    );
+
+    if (day == 5 || day == 6) {
+      if (holiday) {
+        if (holiday.isWeekdays === false) {
+          return 'holliday-on-weekend';
+        }
+      }
+      return 'weekend';
+    } else {
+      if (holiday) {
+        if (holiday.isHalfDay) {
+          return 'half-holliday';
+        } else {
+          return 'holliday';
+        }
       }
     }
-    if (cellDate.getDay() == 5 || cellDate.getDay() == 6) {
-      return 'weekend';
-    }
-
     return '';
   };
 
-  public getGroupedHolidays(data: IHolidays[]) {
+  public getGroupedHolidays(data: IHolidays[]): IGroupedHolidays[] {
     const groupedByMonth = data.reduce((acc: any, item: any) => {
       const monthName = this.getMonthName(item.date);
       if (!acc[monthName]) {
@@ -158,12 +154,14 @@ export class HolidaysComponent implements OnInit, OnDestroy {
       return acc;
     }, {});
 
-    const month = Object.keys(groupedByMonth).map((month) => ({
-      month: month,
-      dates: groupedByMonth[month],
-    }));
+    const groupedHolidays: IGroupedHolidays[] = Object.keys(groupedByMonth).map(
+      (month) => ({
+        month: month,
+        holidays: groupedByMonth[month],
+      })
+    );
 
-    return month;
+    return groupedHolidays;
   }
 
   private getMonthName(dateString: string): string {

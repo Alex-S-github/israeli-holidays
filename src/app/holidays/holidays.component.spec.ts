@@ -105,7 +105,7 @@ describe('HolidaysComponent', () => {
         component.form.controls.onlyWeekdays.value
       );
       expect(holidaysService.getHolidays).toHaveBeenCalledWith(2024, true);
-      expect(holidays.length).toEqual(7);
+      expect(holidays.length).toEqual(14);
     }
 
     component.form.controls.year.setValue(2023);
@@ -115,7 +115,7 @@ describe('HolidaysComponent', () => {
         component.form.controls.year.value,
         component.form.controls.onlyWeekdays.value
       );
-      expect(holidays.length).toEqual(9);
+      expect(holidays.length).toEqual(17);
       expect(holidaysService.getHolidays).toHaveBeenCalledWith(2023, false);
     }
 
@@ -186,35 +186,41 @@ describe('HolidaysComponent', () => {
       expect(value).toBe('Table');
     });
   });
+
   it('should return an empty string if view is not "month"', () => {
     const cellDate = new Date(2023, 5, 13);
     const view = 'year';
     const result = component.monthCellClass(cellDate, view);
     expect(result).toBe('');
   });
-  //
-  it('should return "holiday" for holidays that are not weekends', () => {
-    component.holidays = mockHolidays;
+
+  it('should return "holiday" for holidays that are not weekends', fakeAsync(() => {
+    const setDataSourseSpy = spyOn(component, 'setDataView');
+    component.form.patchValue({ year: 2024, onlyWeekdays: true });
+    tick(500);
+    expect(setDataSourseSpy).toHaveBeenCalledTimes(1);
     const cellDate = new Date('Tue Apr 23 2024');
     const view = 'month';
     const result = component.monthCellClass(cellDate, view);
     expect(result).toBe('holliday');
-  });
+  }));
 
-  it('should return "holiday-on-weekend" for holidays that are weekends', () => {
-    component.holidays = mockHolidays;
+  it('should return "holiday-on-weekend" for holidays that are weekends', fakeAsync(() => {
+    component.form.patchValue({ year: 2024, onlyWeekdays: false });
+    tick(600);
     const cellDate = new Date('Fri Oct 04 2024');
     const view = 'month';
     const result = component.monthCellClass(cellDate, view);
+    expect(component.dataSource.data.length).toBe(17);
     expect(result).toBe('holliday-on-weekend');
-  });
+  }));
 
-  it('should return "weekend" for weekends that are not holidays', () => {
+  it('should return "weekend" for weekends that are not holidays', fakeAsync(() => {
     const cellDate = new Date('Sat Oct 05 2024');
     const view = 'month';
     const result = component.monthCellClass(cellDate, view);
     expect(result).toBe('weekend');
-  });
+  }));
 
   it('should return an empty string for non-holiday weekdays', () => {
     const cellDate = new Date(2023, 5, 13);

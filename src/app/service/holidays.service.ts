@@ -19,9 +19,15 @@ export class HolidaysService {
         const date = hd.greg();
         return {
           name: holiday?.linkedEvent?.desc || holiday.desc,
-          date: date,
+          date: !!holiday.eventTime ? holiday.eventTime : date,
           isWeekdays:
             new Date(date).getDay() !== 5 && new Date(date).getDay() !== 6,
+          isHalfDay:
+            holiday.desc == 'Yom HaZikaron' ||
+            holiday.mask === 1048578 ||
+            holiday.mask === 1048594 ||
+            holiday.mask === 2097170 ||
+            holiday.mask === 2097154,
         };
       })
       .filter((holiday) => {
@@ -50,9 +56,14 @@ export class HolidaysService {
           event.mask === 8192 ||
           event.mask === 33 ||
           event.mask === 5 ||
+          event.mask === 1048578 || // "Erev Shavuot" // "Erev Yom Kippur"
+          event.mask === 1048594 || // "Erev Sukkot"
+          event.mask === 2097170 || // Half day Pasover
+          event.mask === 2097154 || // Half day 'Shmini Atzeret' Shimhat Tora
           event.mask === 16389) &&
           event.linkedEvent != null &&
           event.linkedEvent instanceof HolidayEvent) ||
+        event.desc == 'Yom HaZikaron' ||
         event.desc == "Yom HaAtzma'ut"
     );
   }
