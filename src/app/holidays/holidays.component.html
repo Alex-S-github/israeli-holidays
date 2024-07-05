@@ -20,22 +20,24 @@
     <mat-checkbox formControlName="onlyWeekdays" color="primary"
       >Weekdays</mat-checkbox
     >
-    <div *ngIf="view$ | async as view" class="view-btn-container">
-      <button
-        class="btn"
-        (click)="toggleView('Table')"
-        [ngClass]="view === 'Table' ? 'btn-selected' : null"
-      >
-        <mat-icon fontIcon="table_chart" color="primary"></mat-icon> Table
-      </button>
-      <button
-        class="btn"
-        (click)="toggleView('Year')"
-        [ngClass]="view === 'Year' ? 'btn-selected' : null"
-      >
-        <mat-icon fontIcon="calendar_month" color="primary"></mat-icon> Year
-      </button>
-    </div>
+    <ng-container *ngIf="view$ | async as view">
+      <div class="view-btn-container">
+        <button
+          mat-stroked-button
+          (click)="toggleView('Table')"
+          [ngClass]="view === 'Table' ? 'btn-selected' : null"
+        >
+          <mat-icon fontIcon="table_chart" color="primary"></mat-icon> Table
+        </button>
+        <button
+          mat-stroked-button
+          (click)="toggleView('Year')"
+          [ngClass]="view === 'Year' ? 'btn-selected' : null"
+        >
+          <mat-icon fontIcon="calendar_month" color="primary"></mat-icon> Year
+        </button>
+      </div>
+    </ng-container>
   </div>
 </section>
 

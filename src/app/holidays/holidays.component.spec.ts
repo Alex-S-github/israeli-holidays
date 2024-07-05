@@ -26,18 +26,6 @@ describe('HolidaysComponent', () => {
   let fixture: ComponentFixture<HolidaysComponent>;
   let holidaysService: HolidaysService;
 
-  let mockHolidays = [
-    'Tue Apr 23 2024',
-    'Mon Apr 29 2024',
-    'Tue May 14 2024',
-    'Wed Jun 12 2024',
-    'Thu Oct 03 2024',
-    'Fri Oct 04 2024',
-    'Sat Oct 12 2024',
-    'Thu Oct 17 2024',
-    'Thu Oct 24 2024',
-  ];
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
