@@ -1,9 +1,10 @@
 <mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
-  <mat-sidenav #sidenav [mode]="'push'">
+  <mat-sidenav #sidenav [mode]="'side'">
     <ng-container *ngIf="currentView$ | async as View">
       <div class="settings-container">
         <button
           class="btn"
+          mat-stroked-button
           (click)="toggleView(sidenav, 'Table')"
           [ngClass]="View === 'Table' ? 'btn-selected' : null"
         >
@@ -11,6 +12,7 @@
         </button>
         <button
           class="btn"
+          mat-stroked-button
           (click)="toggleView(sidenav, 'Year')"
           [ngClass]="View === 'Year' ? 'btn-selected' : null"
         >
