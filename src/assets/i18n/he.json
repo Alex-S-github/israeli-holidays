@@ -1,0 +1,59 @@
+{
+    "LABEL": {
+        "DAYS_OFF": "ימי חופש",
+        "YEARS": "שנים",
+        "WEEKDAYS": "ימי חול"
+    },
+    "BUTTON": {
+        "TABLE": "טבלה",
+        "YEAR": "שנה"
+    },
+    "TABLE": {
+        "COLUMN": {
+            "NAME": "שם",
+            "DAY": "יום"
+        }
+    },
+    "DAY": {
+        "SUNDAY": "יום ראשון",
+        "MONDAY": "יום שני",
+        "TUESDAY": "יום שלישי",
+        "WEDNESDAY": "יום רביעי",
+        "THURSDAY": "יום חמישי",
+        "FRIDAY": "יום שישי",
+        "SATURDAY": "שבת"
+    },
+    "MONTH": {
+        "JAN": "ינו",
+        "FEB": "פבר",
+        "MAR": "מרץ",
+        "APR": "אפר",
+        "MAY": "מאי",
+        "JUN": "יונ",
+        "JUL": "יול",
+        "AUG": "אוג",
+        "SEP": "ספט",
+        "OCT": "אוק",
+        "NOV": "נוב",
+        "DEC": "דצמ"
+    },
+    "HOLIDAY": {
+        "Erev Pesach": "ערב חג פסח",
+        "Pesach I": "חג פסח",
+        "Pesach VI (CH''M)": "ערב חג שני של פסח",
+        "Pesach VII": "ג פסח שני",
+        "Yom HaZikaron": "יום הזיכרון לחללי צה''ל",
+        "Yom HaAtzma'ut": "יום העצמאות",
+        "Erev Shavuot": "ערב חג שבועות",
+        "Shavuot": "שבועות",
+        "Erev Rosh Hashana": "ערב ראש השנה",
+        "Rosh Hashana": "חג ראש השנה",
+        "Rosh Hashana II": "חג ראש השנה ב'  ",
+        "Erev Yom Kippur": "ערב יום כיפור",
+        "Yom Kippur": "יום כיפור",
+        "Erev Sukkot": "ערב חג סוכות",
+        "Sukkot I": "חג סוכות",
+        "Sukkot VII (Hoshana Raba)": "ערב סוכות - חג שני",
+        "Shmini Atzeret": "שמחת תורה"
+    }
+}

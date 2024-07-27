@@ -1,0 +1,10 @@
+<section class="year-container">
+  @for (gh of (groupedHolidays$ | async); track gh.holidays) {
+  <mat-card class="calendar-card">
+    <mat-calendar
+      [startAt]="gh.holidays[0].date"
+      [dateClass]="monthCellClass"
+    ></mat-calendar>
+  </mat-card>
+  }
+</section>

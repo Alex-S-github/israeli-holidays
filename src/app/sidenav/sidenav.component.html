@@ -1,25 +1,46 @@
 <mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
   <mat-sidenav #sidenav [mode]="'side'">
-    <ng-container *ngIf="currentView$ | async as View">
-      <div class="settings-container">
-        <button
-          class="btn"
-          mat-stroked-button
-          (click)="toggleView(sidenav, 'Table')"
-          [ngClass]="View === 'Table' ? 'btn-selected' : null"
-        >
-          <mat-icon fontIcon="table_chart" [color]="color"></mat-icon> Table
-        </button>
-        <button
-          class="btn"
-          mat-stroked-button
-          (click)="toggleView(sidenav, 'Year')"
-          [ngClass]="View === 'Year' ? 'btn-selected' : null"
-        >
-          <mat-icon fontIcon="calendar_month" [color]="color"></mat-icon> Year
-        </button>
-      </div>
-    </ng-container>
+    @if(currentView$ | async; as View){
+    <div class="settings-container">
+      <button
+        class="btn"
+        mat-stroked-button
+        (click)="toggleView(sidenav, 'Table')"
+        [ngClass]="View === 'Table' ? 'btn-selected' : null"
+      >
+        <mat-icon fontIcon="table_chart" [color]="color"></mat-icon>
+        {{ "BUTTON.TABLE" | translate }}
+      </button>
+      <button
+        class="btn"
+        mat-stroked-button
+        (click)="toggleView(sidenav, 'Year')"
+        [ngClass]="View === 'Year' ? 'btn-selected' : null"
+      >
+        <mat-icon fontIcon="calendar_month" [color]="color"></mat-icon>
+        {{ "BUTTON.YEAR" | translate }}
+      </button>
+      <mat-divider></mat-divider>
+      @for (state of states; track $index) {
+      <button
+        class="btn"
+        mat-stroked-button
+        (click)="switchLanguage(state.language, sidenav)"
+        [ngClass]="
+          state.language == translate.currentLang ? 'btn-selected' : null
+        "
+      >
+        <div class="flag-icon-container">
+          <div class="circle">
+            <img alt="" class="example-option-img" [src]="state.flag" />
+          </div>
+          {{ state.name }}
+        </div>
+      </button>
+      }
+      <mat-divider></mat-divider>
+    </div>
+    }
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content-container">
@@ -28,6 +49,22 @@
       </button>
 
       <img src="assets/holidays-blue.svg" />
+
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon [color]="color">language</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" class="menu">
+        @for (state of states; track $index) {
+        <button mat-menu-item (click)="switchLanguage(state.language)">
+          <div class="flag-icon-container flag-icon-wrapper">
+            <div class="circle">
+              <img alt="" class="example-option-img" [src]="state.flag" />
+            </div>
+            {{ state.name }}
+          </div>
+        </button>
+        }
+      </mat-menu>
     </div>
 
     <ng-content select=".holidays"></ng-content>

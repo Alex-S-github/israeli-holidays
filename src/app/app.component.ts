@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { HolidaysComponent } from './holidays/holidays.component';
+import { HolidaysComponent } from './components/holidays/holidays.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 
 @Component({

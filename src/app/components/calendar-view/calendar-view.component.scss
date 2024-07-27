@@ -1,0 +1,86 @@
+.year-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px;
+}
+
+.calendar-card {
+  width: 100%;
+  max-width: 300px;
+  .mat-calendar-content {
+    padding-top: 10px;
+  }
+  mat-calendar-header {
+    display: none;
+  }
+}
+
+button.holliday,
+button.holliday-on-weekend,
+button.half-holliday {
+  background: #3f51b5;
+  border-radius: 100%;
+  .mat-calendar-body-cell-content {
+    color: white;
+  }
+}
+button.holliday-on-weekend {
+  opacity: 0.3;
+}
+
+button.half-holliday {
+  opacity: 0.8;
+}
+
+.weekend {
+  .mat-calendar-body-cell-content {
+    color: green;
+  }
+  opacity: 0.6;
+}
+
+@media (max-width: 650px) {
+  .year-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(50% - 10px), 1fr));
+
+    gap: 10px;
+    margin: 20px;
+    align-items: stretch;
+    grid-auto-rows: 1fr;
+  }
+  .year-container > :nth-last-child(1):nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 10px);
+  }
+}
+
+@media (max-width: 375px) {
+  .year-container {
+    margin: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .calendar-card {
+    .mat-calendar-content {
+      padding-top: 10px;
+    }
+    .mat-calendar-body-cell-content {
+      font-size: 10px;
+    }
+    .mat-calendar-body-label {
+      font-size: 11px;
+    }
+  }
+
+  .month-container {
+    .calendar-card {
+      width: calc(100% - 20px);
+      margin: 10px;
+    }
+  }
+}

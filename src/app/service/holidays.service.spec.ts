@@ -79,15 +79,12 @@ describe('HolidaysService', () => {
   });
 
   it('should return the initial view as "Table"', (done: DoneFn) => {
+    service.setView('Table');
     service.getView().subscribe((view) => {
       expect(view).toBe('Table');
       done();
     });
-  });
-
-  it('should return the current view value', () => {
-    service.setView('Year');
-    expect(service.getViewValue()).toBe('Year');
+    expect(service.getViewValue()).toBe('Table');
   });
 
   it('should set the view to "Year" and return the updated value', (done: DoneFn) => {
@@ -96,10 +93,43 @@ describe('HolidaysService', () => {
       expect(view).toBe('Year');
       done();
     });
+    expect(service.getViewValue()).toBe('Year');
   });
 
   it('should update the current view value after setting a new view', () => {
     service.setView('Year');
     expect(service.getViewValue()).toBe('Year');
+  });
+
+  it('should return "en-GB" for "en"', () => {
+    expect(service.getLocale('en')).toBe('en-GB');
+  });
+
+  it('should return "ru-RU" for "ru"', () => {
+    expect(service.getLocale('ru')).toBe('ru-RU');
+  });
+
+  it('should return "he" for "he"', () => {
+    expect(service.getLocale('he')).toBe('he');
+  });
+
+  it('should return "en-GB" for unknown language', () => {
+    expect(service.getLocale('fr')).toBe('en-GB');
+    expect(service.getLocale('')).toBe('en-GB');
+    expect(service.getLocale(null as unknown as string)).toBe('en-GB');
+  });
+
+  mockData.forEach(({ year, weekdaysOnly }) => {
+    it(`should update dataSource$ and dataLengthSource$ when updateFormState is called with year ${year}`, () => {
+      spyOn(service, 'updateFormState').and.callThrough();
+      service.updateFormState(year, true);
+      expect(service.updateFormState).toHaveBeenCalledWith(year, true);
+      service.getDataSource().subscribe((data) => {
+        expect(data).toBeInstanceOf(Array);
+      });
+      service.getDataLengthSource().subscribe((dataLength: number) => {
+        expect(dataLength).toEqual(weekdaysOnly);
+      });
+    });
   });
 });
