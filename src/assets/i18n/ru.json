@@ -1,0 +1,59 @@
+{
+    "LABEL": {
+        "DAYS_OFF": "Выходные дни",
+        "YEARS": "Год",
+        "WEEKDAYS": "Будние дни"
+    },
+    "BUTTON": {
+        "TABLE": "Таблица",
+        "YEAR": "Год"
+    },
+    "TABLE": {
+        "COLUMN": {
+            "NAME": "Название праздника",
+            "DAY": "День"
+        }
+    },
+    "DAY": {
+        "SUNDAY": "Воскресенье",
+        "MONDAY": "Понедельник",
+        "TUESDAY": "Вторник",
+        "WEDNESDAY": "Среда",
+        "THURSDAY": "Четверг",
+        "FRIDAY": "Пятница",
+        "SATURDAY": "Суббота"
+    },
+    "MONTH": {
+        "JAN": "Янв",
+        "FEB": "Фев",
+        "MAR": "Мар",
+        "APR": "Апр",
+        "MAY": "Май",
+        "JUN": "Июн",
+        "JUL": "Июл",
+        "AUG": "Авг",
+        "SEP": "Сен",
+        "OCT": "Окт",
+        "NOV": "Ноя",
+        "DEC": "Дек"
+    },
+    "HOLIDAY": {
+        "Erev Pesach": "Вечер Пэсаха",
+        "Pesach I": "Пэсах I",
+        "Pesach VI (CH''M)": "Шестой день Пэсах, Холь Амоэд",
+        "Pesach VII": "Седьмой день Пэсах",
+        "Yom HaZikaron": "День Памяти",
+        "Yom HaAtzma'ut": "День Независимости",
+        "Erev Shavuot": "Вечер Шавуота",
+        "Shavuot": "Шавуот",
+        "Erev Rosh Hashana": "Вечер Рош-А-Шана",
+        "Rosh Hashana": "Рош-А-Шана",
+        "Rosh Hashana II": "Рош-А-Шана II",
+        "Erev Yom Kippur": "Вечер Дня Раскаяния",
+        "Yom Kippur": "День Раскаяния",
+        "Erev Sukkot": "Вечер Суккота",
+        "Sukkot I": "Суккот I",
+        "Sukkot VII (Hoshana Raba)": "Седьмой день Суккота (Ошана Раба)",
+        "Shmini Atzeret": "Шмини Ацерет"
+    }
+}

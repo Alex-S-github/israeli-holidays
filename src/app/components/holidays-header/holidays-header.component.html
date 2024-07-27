@@ -1,0 +1,39 @@
+<section class="header" [formGroup]="form">
+  <mat-form-field class="full-width">
+    <mat-label>{{ "LABEL.DAYS_OFF" | translate }}</mat-label>
+    <input matInput [value]="days$ | async" readonly />
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>{{ "LABEL.YEARS" | translate }}</mat-label>
+    <mat-select formControlName="year">
+      @for (year of years; track $index) {
+      <mat-option [value]="year">{{ year }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <div class="view-container">
+    <mat-checkbox formControlName="onlyWeekdays" color="primary">
+      {{ "LABEL.WEEKDAYS" | translate }}
+    </mat-checkbox>
+    @if(view$ | async; as view){
+    <div class="view-btn-container">
+      <button
+        mat-stroked-button
+        (click)="toggleView('Table')"
+        [ngClass]="view === 'Table' ? 'btn-selected' : null"
+      >
+        <mat-icon fontIcon="table_chart" color="primary"></mat-icon>
+        {{ "BUTTON.TABLE" | translate }}
+      </button>
+      <button
+        mat-stroked-button
+        (click)="toggleView('Year')"
+        [ngClass]="view === 'Year' ? 'btn-selected' : null"
+      >
+        <mat-icon fontIcon="calendar_month" color="primary"></mat-icon>
+        {{ "BUTTON.YEAR" | translate }}
+      </button>
+    </div>
+    }
+  </div>
+</section>

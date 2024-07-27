@@ -1,0 +1,7 @@
+<app-holidays-header></app-holidays-header>
+
+@if (view$ | async; as view) { @if (view == 'Table'){
+<app-table-view></app-table-view>
+} @if (view == 'Year'){
+<app-calendar-view></app-calendar-view>
+} }

@@ -25,6 +25,9 @@ import {
 } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { provideNativeDateAdapter } from '@angular/material/core';
+/**
+ * @deprecated This Component is Deprecated.
+ */
 @Component({
   selector: 'app-holidays',
   standalone: true,

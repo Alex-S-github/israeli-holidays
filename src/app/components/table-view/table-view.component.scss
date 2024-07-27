@@ -1,0 +1,29 @@
+.table-container {
+  height: fit-content;
+  overflow: auto;
+  margin: 20px;
+  table {
+    width: 100%;
+
+    .day-column {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .table-container {
+    margin: 0px;
+  }
+}
+
+@media (max-width: 320px) {
+  table {
+    .mdc-data-table__cell,
+    .mdc-data-table__header-cell {
+      padding: 0 8px 0 8px;
+    }
+  }
+}
