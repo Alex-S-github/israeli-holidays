@@ -1,13 +1,53 @@
 import { Injectable } from '@angular/core';
-import { HebrewCalendar, Location, HolidayEvent } from '@hebcal/core';
+import {
+  HebrewCalendar,
+  Location,
+  HolidayEvent,
+  CalOptions,
+} from '@hebcal/core';
 import { IHolidays } from '../interfaces/holidays.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { LocalStorageWrapperService } from './local-storage-wrapper.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HolidaysService {
-  protected view$: BehaviorSubject<string> = new BehaviorSubject('Table');
+  constructor(private localStorageWrapperService: LocalStorageWrapperService) {}
+
+  protected view$: BehaviorSubject<string> = new BehaviorSubject(
+    this._setDefaultView()
+  );
+
+  private _setDefaultView(): string {
+    let view = 'Table';
+    let storageView = this.localStorageWrapperService.getItem('view');
+    if (!!storageView && typeof storageView == 'string') {
+      view = storageView;
+    }
+    return view;
+  }
+
+  private _dataSource$ = new BehaviorSubject<IHolidays[]>(
+    this.getHolidays(new Date().getFullYear(), true)
+  );
+  private _dataLengthSource$ = new BehaviorSubject<number>(
+    this._dataSource$.value.length
+  );
+
+  public getDataSource(): BehaviorSubject<IHolidays[]> {
+    return this._dataSource$;
+  }
+
+  public getDataLengthSource(): BehaviorSubject<number> {
+    return this._dataLengthSource$;
+  }
+
+  public updateFormState(year: number, onlyWeekdays: boolean): void {
+    const newDataSource = this.getHolidays(year, onlyWeekdays);
+    this._dataSource$.next(newDataSource);
+    this._dataLengthSource$.next(newDataSource.length);
+  }
 
   public getHolidays(
     year: number,
@@ -41,7 +81,7 @@ export class HolidaysService {
   }
 
   private _getHolidays(year: number): HebrewCalendar[] {
-    const options = {
+    const options: CalOptions = {
       year: year,
       isHebrewYear: false,
       candlelighting: true,
@@ -88,5 +128,18 @@ export class HolidaysService {
 
   public setView(view: string): void {
     this.view$.next(view);
+  }
+
+  public getLocale(language: string): string {
+    if (language == 'en') {
+      return 'en-GB';
+    }
+    if (language == 'ru') {
+      return 'ru-RU';
+    }
+    if (language == 'he') {
+      return 'he';
+    }
+    return 'en-GB';
   }
 }

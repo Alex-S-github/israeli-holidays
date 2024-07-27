@@ -9,3 +9,8 @@ export interface IGroupedHolidays {
   month: string;
   holidays: IHolidays[];
 }
+export interface State {
+  flag: string;
+  name: string;
+  language: string;
+}
